@@ -27,12 +27,12 @@ async def auto_delete_(bot, update):
         await set_auto_delete(int(dur))
 
         if dur:
-            await update.reply_text(f"File auto delete set to `{dur}` seconds")
+            await update.reply_text(f"Fɪʟᴇ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ sᴇᴛ ᴛᴏ {dur} sᴇᴄᴏɴᴅs")
         else:
-            await update.reply_text("File auto delete disabled")
+            await update.reply_text("Fɪʟᴇ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ ᴅɪsᴀʙʟᴇᴅ")
 
     else:
-        await update.reply_text("Please send in proper format `/autodelete seconds`")
+        await update.reply_text("Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/autodelete seconds`")
 
 
 @Client.on_message(filters.command(["repairmode"]) & filters.user(ADMINS))
@@ -46,15 +46,15 @@ async def repair_mode_(bot, update):
             mode = True
         else:
             await update.reply_text(
-                "Please send in proper format `/repairmode <on/off>`"
+                "Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/repairmode <on/off>`"
             )
             return
 
         await set_repair_mode(mode)
-        await update.reply_text(f"Repair mode set to `{toggle.upper()}`")
+        await update.reply_text(f"Rᴇᴘᴀɪʀ ᴍᴏᴅᴇ sᴇᴛ ᴛᴏ `{toggle.upper()}`")
 
     else:
-        await update.reply_text("Please send in proper format `/repairmode on/off`")
+        await update.reply_text("Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/repairmode on/off`")
         return
 
 
@@ -69,13 +69,13 @@ async def custom_caption_(bot, update):
         await set_custom_caption(caption)
 
         if caption:
-            await update.reply_text(f"Custom caption set to `{caption}`")
+            await update.reply_text(f"Cᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ sᴇᴛ ᴛᴏ `{caption}`")
         else:
-            await update.reply_text("Custom caption disabled")
+            await update.reply_text("Cᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ ᴅɪsᴀʙʟᴇᴅ")
 
     else:
         await update.reply_text(
-            "Please send in proper format `/customcaption caption/off`"
+            "Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/customcaption caption/off`"
         )
         return
 
@@ -101,28 +101,28 @@ async def admin_settings_(bot, update):
     if auto_delete:
         auto_delete = f"{auto_delete} seconds"
     else:
-        auto_delete = "Disabled"
+        auto_delete = "Dɪsᴀʙʟᴇᴅ"
 
     if not custom_caption:
-        custom_caption = "Disabled"
+        custom_caption = "Dɪsᴀʙʟᴇᴅ"
 
     if not fsub_channel:
-        fsub_channel = "Disabled"
+        fsub_channel = "Dɪsᴀʙʟᴇᴅ"
 
     if not caption_uname:
-        caption_uname = "Disabled"
+        caption_uname = "Dɪsᴀʙʟᴇᴅ"
 
     if not invite_link:
-        invite_link = "Disabled"
+        invite_link = "Dɪsᴀʙʟᴇᴅ"
 
     if repair_mode:
-        repair_mode = "Enabled"
+        repair_mode = "Eɴᴀʙʟᴇᴅ"
     else:
-        repair_mode = "Disabled"
+        repair_mode = "Dɪsᴀʙʟᴇᴅ"
 
     await bot.send_message(
         chat_id=user_id,
-        text=f"**Below are your current settings.**\n\n**Repair Mode:** `{repair_mode}`\n**Auto Delete:** `{auto_delete}`\n**Custom Caption:** `{custom_caption}`\n**Force Sub:** `{fsub_channel}`\n**Caption Username:** `{caption_uname}`\n**Channel Link:** `{invite_link}`\n**Admins:** {admins} \n**DB Channels:** {dbchannel}",
+        text=f"**Bᴇʟᴏᴡ ᴀʀᴇ ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ sᴇᴛᴛɪɴɢs.**\n\n**Rᴇᴘᴀɪʀ ᴍᴏᴅᴇ:** `{repair_mode}`\n**ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ:** `{auto_delete}`\n**Cᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ:** `{custom_caption}`\n**Fᴏʀᴄᴇ Sᴜʙ:** `{fsub_channel}`\n**Cᴀᴘᴛɪᴏɴ Usᴇʀɴᴀᴍᴇ:** `{caption_uname}`\n**Cʜᴀɴɴᴇʟ Lɪɴᴋ:** `{invite_link}`\n**Aᴅᴍɪɴs:** {admins} \n**DB Cʜᴀɴɴᴇʟs:** {dbchannel}",
     )
 
 
@@ -134,12 +134,12 @@ async def banuser(bot, update):
         banned = await is_banned(int(user_id))
         if not banned:
             await ban_user(int(user_id))
-            await update.reply_text(f"User {user_id} banned")
+            await update.reply_text(f"Usᴇʀ {user_id} ʙᴀɴɴᴇᴅ")
         else:
-            await update.reply_text(f"User {user_id} is already banned")
+            await update.reply_text(f"Usᴇʀ {user_id} ɪs ᴀʟʀᴇᴀᴅʏ ʙᴀɴɴᴇᴅ")
 
     else:
-        await update.reply_text("Please send in proper format `/ban user_id`")
+        await update.reply_text("Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/ban user_id`")
 
 
 @Client.on_message(filters.command(["unban"]) & filters.user(ADMINS))
@@ -150,11 +150,11 @@ async def unbanuser(bot, update):
         banned = await is_banned(int(user_id))
         if banned:
             await unban_user(int(user_id))
-            await update.reply_text(f"User {user_id} unbanned")
+            await update.reply_text(f"Usᴇʀ {user_id} ᴜɴʙᴀɴɴᴇᴅ")
         else:
-            await update.reply_text(f"User {user_id} is not in ban list")
+            await update.reply_text(f"Usᴇʀ {user_id} ɪs ɴᴏᴛ ɪɴ ʙᴀɴ ʟɪsᴛ")
     else:
-        await update.reply_text("Please send in proper format `/unban user_id`")
+        await update.reply_text("Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/unban user_id`")
 
 
 @Client.on_message(filters.command(["addfilter"]) & filters.user(ADMINS))
@@ -165,12 +165,12 @@ async def addfilter(bot, update):
         message = " ".join(data[2:])
         add = await add_filter(fltr, message)
         if add:
-            await update.reply_text(f"Filter `{fltr}` added")
+            await update.reply_text(f"Fɪʟᴛᴇʀ `{fltr}` ᴀᴅᴅᴇᴅ")
         else:
-            await update.reply_text(f"Filter `{fltr}` already exists")
+            await update.reply_text(f"Fɪʟᴛᴇʀ `{fltr}` ᴀʟʀᴇᴀᴅʏ ᴇxɪsᴛs")
     else:
         await update.reply_text(
-            "Please send in proper format `/addfilter filter message`"
+            "Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/addfilter filter message`"
         )
 
 
@@ -181,11 +181,11 @@ async def delfilter(bot, update):
         fltr = " ".join(data[1:])
         rem = await rem_filter(fltr)
         if rem:
-            await update.reply_text(f"Filter `{fltr}` removed")
+            await update.reply_text(f"Fɪʟᴛᴇʀ `{fltr}` ʀᴇᴍᴏᴠᴇᴅ")
         else:
-            await update.reply_text(f"Filter `{fltr}` not found")
+            await update.reply_text(f"Fɪʟᴛᴇʀ `{fltr}` ɴᴏᴛ ғᴏᴜɴᴅ")
     else:
-        await update.reply_text("Please send in proper format `/delfilter filter`")
+        await update.reply_text("Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/delfilter filter`")
 
 
 @Client.on_message(filters.command(["listfilters"]) & filters.user(ADMINS))
@@ -195,9 +195,9 @@ async def list_filter(bot, update):
     if fltr:
         for fltrs in fltr:
             fltr_msg += "\n" + "`" + fltrs + "`"
-        await update.reply_text(f"**Available Filters:** {fltr_msg}")
+        await update.reply_text(f"**Aᴠᴀɪʟᴀʙʟᴇ Fɪʟᴛᴇʀs:** {fltr_msg}")
     else:
-        await update.reply_text("No filters found")
+        await update.reply_text("Nᴏ ғɪʟᴛᴇʀs ғᴏᴜɴᴅ")
 
 
 @Client.on_message(filters.command(["forcesub"]) & filters.user(ADMINS))
@@ -214,19 +214,19 @@ async def force_sub(bot, update):
                 await set_channel_link(link.invite_link)
             except Exception as e:
                 await update.reply_text(
-                    f" Error while creating channel invite link: {str(e)}"
+                    f" Eʀʀᴏʀ ᴡʜɪʟᴇ ᴄʀᴇᴀᴛɪɴɢ ᴄʜᴀɴɴᴇʟ ɪɴᴠɪᴛᴇ ʟɪɴᴋ: {str(e)}"
                 )
                 return
 
             await set_force_sub(int(channel))
-            await update.reply_text(f"Force Subscription channel set to `{channel}`")
+            await update.reply_text(f"Fᴏʀᴄᴇ Sᴜʙsᴄʀɪᴘᴛɪᴏɴ ᴄʜᴀɴɴᴇʟ sᴇᴛ ᴛᴏ `{channel}`")
         else:
             await set_channel_link(None)
-            await update.reply_text("Force Subscription disabled")
+            await update.reply_text("Fᴏʀᴄᴇ Sᴜʙsᴄʀɪᴘᴛɪᴏɴ Dɪsᴀʙʟᴇᴅ")
 
     else:
         await update.reply_text(
-            "Please send in proper format `/forcesub channel_id/off`"
+            "Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/forcesub channel_id/off`"
         )
 
 
@@ -234,10 +234,10 @@ async def force_sub(bot, update):
 async def testlink(bot, update):
     link = await get_link()
     if link:
-        await update.reply_text(f"Invite link for force subscription channel: {link}")
+        await update.reply_text(f"Iɴᴠɪᴛᴇ ʟɪɴᴋ ғᴏʀ ғᴏʀᴄᴇ sᴜʙsᴄʀɪᴘᴛɪᴏɴ ᴄʜᴀɴɴᴇʟ: {link}")
     else:
         await update.reply_text(
-            "Force Subscription is disabled, please enable it first"
+            "Fᴏʀᴄᴇ Sᴜʙsᴄʀɪᴘᴛɪᴏɴ ɪs ᴅɪsᴀʙʟᴇᴅ, ᴘʟᴇᴀsᴇ ᴇɴᴀʙʟᴇ ɪᴛ ғɪʀsᴛ"
         )
 
 
@@ -251,23 +251,23 @@ async def caption_username(bot, update):
         elif username.startswith("@"):
             username = username
         else:
-            await update.reply_text("This is not a username, please check.")
+            await update.reply_text("Tʜɪs ɪs ɴᴏᴛ ᴀ ᴜsᴇʀɴᴀᴍᴇ, ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ.")
             return
 
         await set_username(username)
 
         if username:
-            await update.reply_text(f"File caption username set to `{username}`")
+            await update.reply_text(f"Fɪʟᴇ ᴄᴀᴘᴛɪᴏɴ ᴜsᴇʀɴᴀᴍᴇ sᴇᴛ ᴛᴏ `{username}`")
         else:
-            await update.reply_text("File caption username disabled")
+            await update.reply_text("Fɪʟᴇ ᴄᴀᴘᴛɪᴏɴ ᴜsᴇʀɴᴀᴍᴇ ᴅɪsᴀʙʟᴇᴅ")
 
     else:
         await update.reply_text(
-            "Please send in proper format `/setusername username/off`"
+            "Pʟᴇᴀsᴇ sᴇɴᴅ ɪɴ ᴘʀᴏᴘᴇʀ ғᴏʀᴍᴀᴛ `/setusername username/off`"
         )
 
 
 @Client.on_message(filters.command(["total"]) & filters.user(ADMINS))
 async def count_f(bot, update):
     count = await count_files()
-    await update.reply_text(f"**Total no. of files in DB:** `{count}`")
+    await update.reply_text(f"**Tᴏᴛᴀʟ ɴᴏ. ᴏғ ғɪʟᴇs ɪɴ DB:** `{count}`")
