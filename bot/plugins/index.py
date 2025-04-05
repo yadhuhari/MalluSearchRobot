@@ -2,9 +2,9 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from mfinder import ADMINS, LOGGER
-from mfinder.db.files_sql import save_file, delete_file
-from mfinder.utils.helpers import edit_caption
+from bot import ADMINS, LOGGER
+from bot.db.files_sql import save_file, delete_file
+from bot.utils.helpers import edit_caption
 
 
 lock = asyncio.Lock()
@@ -15,7 +15,7 @@ media_filter = filters.document | filters.video | filters.audio
 async def index_files(bot, message):
     user_id = message.from_user.id
     if lock.locked():
-        await message.reply("Wait until previous process complete.")
+        await message.reply("Wᴀɪᴛ ᴜɴᴛɪʟ ᴘʀᴇᴠɪᴏᴜs ᴘʀᴏᴄᴇss ᴄᴏᴍᴘʟᴇᴛᴇ.")
     else:
 
         try:
@@ -30,20 +30,20 @@ async def index_files(bot, message):
                 [
                     [
                         InlineKeyboardButton(
-                            "Proceed", callback_data=f"index {chat_id} {last_msg_id}"
+                            "Pʀᴏᴄᴇᴇᴅ ☑", callback_data=f"index {chat_id} {last_msg_id}"
                         )
                     ],
-                    [InlineKeyboardButton("Cancel", callback_data="can-index")],
+                    [InlineKeyboardButton("Cᴀɴᴄᴇʟ ❌", callback_data="can-index")],
                 ]
             )
             await bot.send_message(
                 user_id,
-                "Please confirm if you want to start indexing",
+                "Pʟᴇᴀsᴇ ᴄᴏɴғɪʀᴍ ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ sᴛᴀʀᴛ ɪɴᴅᴇxɪɴɢ",
                 reply_markup=kb,
             )
         except Exception as e:
             await message.reply_text(
-                f"Unable to start indexing, either the channel is private and bot is not an admin in the forwarded chat, or you forwarded message as copy.\nError caused due to <code>{e}</code>"
+                f"Uɴᴀʙʟᴇ ᴛᴏ sᴛᴀʀᴛ ɪɴᴅᴇxɪɴɢ, ᴇɪᴛʜᴇʀ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪs ᴘʀɪᴠᴀᴛᴇ ᴀɴᴅ ʙᴏᴛ ɪs ɴᴏᴛ ᴀɴ ᴀᴅᴍɪɴ ɪɴ ᴛʜᴇ ғᴏʀᴡᴀʀᴅᴇᴅ ᴄʜᴀᴛ, ᴏʀ ʏᴏᴜ ғᴏʀᴡᴀʀᴅᴇᴅ ᴍᴇssᴀɢᴇ ᴀs ᴄᴏᴘʏ.\nEʀʀᴏʀ ᴄᴀᴜsᴇᴅ ᴅᴜᴇ ᴛᴏ <code>{e}</code>"
             )
 
 
@@ -53,7 +53,7 @@ async def index(bot, query):
     chat_id, last_msg_id = map(int, query.data.split()[1:])
 
     await query.message.delete()
-    msg = await bot.send_message(user_id, "Processing Index...⏳")
+    msg = await bot.send_message(user_id, "Pʀᴏᴄᴇssɪɴɢ Iɴᴅᴇx...⏳")
     total_files = 0
     async with lock:
         try:
@@ -89,11 +89,11 @@ async def index(bot, query):
                 if counter == 50:
                     try:
                         await msg.edit(
-                            f"Total messages fetched: {current}\nTotal messages saved: {total_files}"
+                            f"Tᴏᴛᴀʟ ᴍᴇssᴀɢᴇs ғᴇᴛᴄʜᴇᴅ: {current}\nTᴏᴛᴀʟ ᴍᴇssᴀɢᴇs sᴀᴠᴇᴅ: {total_files}"
                         )
                     except FloodWait as e:
                         LOGGER.warning(
-                            "FloodWait while indexing, sleeping for: %s", str(e.value)
+                            "FʟᴏᴏᴅWᴀɪᴛ ᴡʜɪʟᴇ ɪɴᴅᴇxɪɴɢ, sʟᴇᴇᴘɪɴɢ ғᴏʀ: %s", str(e.value)
                         )
                         await asyncio.sleep(e.value)
                     counter -= 50
@@ -104,20 +104,20 @@ async def index(bot, query):
             LOGGER.exception(e)
             await msg.edit(f"Error: {e}")
         else:
-            await msg.edit(f"Total {total_files} Saved To DataBase!")
+            await msg.edit(f"Tᴏᴛᴀʟ {total_files} Sᴀᴠᴇᴅ Tᴏ DᴀᴛᴀBᴀsᴇ!")
 
 
 @Client.on_message(filters.command(["index"]) & filters.user(ADMINS))
 async def index_comm(bot, update):
     await update.reply(
-        "Now please forward the last message of the channel you want to index & follow the steps. Bot must be admin of the channel if the channel is private."
+        "Nᴏᴡ ᴘʟᴇᴀsᴇ ғᴏʀᴡᴀʀᴅ ᴛʜᴇ ʟᴀsᴛ ᴍᴇssᴀɢᴇ ᴏғ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ɪɴᴅᴇx & ғᴏʟʟᴏᴡ ᴛʜᴇ sᴛᴇᴘs. Bᴏᴛ ᴍᴜsᴛ ʙᴇ ᴀᴅᴍɪɴ ᴏғ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪғ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪs ᴘʀɪᴠᴀᴛᴇ."
     )
 
 
 @Client.on_message(filters.command(["delete"]) & filters.user(ADMINS))
 async def delete_files(bot, message):
     if not message.reply_to_message:
-        await message.reply("Please reply to a file to delete")
+        await message.reply("Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ғɪʟᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ")
     org_msg = message.reply_to_message
     try:
         for file_type in ("document", "video", "audio"):
@@ -126,12 +126,12 @@ async def delete_files(bot, message):
                 break
             del_file = await delete_file(media)
             if del_file == "Not Found":
-                await message.reply(f"`{media.file_name}` not found in database")
+                await message.reply(f"`{media.file_name}` ɴᴏᴛ ғᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀsᴇ")
             elif del_file == True:
-                await message.reply(f"`{media.file_name}` deleted from database")
+                await message.reply(f"`{media.file_name}` ᴅᴇʟᴇᴛᴇᴅ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ")
             else:
                 await message.reply(
-                    f"Error occurred while deleting `{media.file_name}`, please check logs for more info"
+                    f"Eʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴅᴇʟᴇᴛɪɴɢ {media.file_name}, ᴘʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ʟᴏɢs ғᴏʀ ᴍᴏʀᴇ ɪɴғᴏ"
                 )
     except Exception as e:
         LOGGER.warning("Error occurred while deleting file: %s", str(e))
