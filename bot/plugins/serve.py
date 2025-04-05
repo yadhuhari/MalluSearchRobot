@@ -1,4 +1,5 @@
 import re
+import random
 import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import (
@@ -11,20 +12,20 @@ from pyrogram.types import (
 from pyrogram.enums import ParseMode, ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
-from mfinder.db.files_sql import (
+from bot.db.files_sql import (
     get_filter_results,
     get_file_details,
     get_precise_filter_results,
 )
-from mfinder.db.settings_sql import (
+from bot.db.settings_sql import (
     get_search_settings,
     get_admin_settings,
     get_link,
     get_channel,
 )
-from mfinder.db.ban_sql import is_banned
-from mfinder.db.filters_sql import is_filter
-from mfinder import LOGGER
+from bot.db.ban_sql import is_banned
+from bot.db.filters_sql import is_filter
+from bot import LOGGER
 
 
 @Client.on_message(
@@ -37,7 +38,7 @@ async def filter_(bot, message):
         return
 
     if await is_banned(user_id):
-        await message.reply_text("You are banned. You can't use this bot.", quote=True)
+        await message.reply_text("Yᴏᴜ ᴀʀᴇ ʙᴀɴɴᴇᴅ. Yᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴛʜɪs ʙᴏᴛ.", quote=True)
         return
 
     force_sub = await get_channel()
@@ -45,14 +46,14 @@ async def filter_(bot, message):
         try:
             user = await bot.get_chat_member(int(force_sub), user_id)
             if user.status == ChatMemberStatus.BANNED:
-                await message.reply_text("Sorry, you are Banned to use me.", quote=True)
+                await message.reply_text("Sᴏʀʀʏ, ʏᴏᴜ ᴀʀᴇ Bᴀɴɴᴇᴅ ᴛᴏ ᴜsᴇ ᴍᴇ.", quote=True)
                 return
         except UserNotParticipant:
             link = await get_link()
             await message.reply_text(
-                text="**Please join my Update Channel to use this Bot!**",
+                text="**Pʟᴇᴀsᴇ Jᴏɪɴ Mʏ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ Tᴏ Usᴇ Tʜɪs Bᴏᴛ!**",
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton("🤖 Join Channel", url=link)]]
+                    [[InlineKeyboardButton("🤖 Jᴏɪɴ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ", url=link)]]
                 ),
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
@@ -61,7 +62,7 @@ async def filter_(bot, message):
         except Exception as e:
             LOGGER.warning(e)
             await message.reply_text(
-                text="Something went wrong, please contact my support group",
+                text="Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ, ᴘʟᴇᴀsᴇ ᴄᴏɴᴛᴀᴄᴛ ᴍʏ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ",
                 quote=True,
             )
             return
@@ -88,21 +89,24 @@ async def filter_(bot, message):
 
         if result:
             if btn:
-                await message.reply_text(
-                    f"{result}",
+                await message.reply_photo(
+                    photo=random.choice(RESULT_PIC),
+                    caption=f"{result}",
                     reply_markup=InlineKeyboardMarkup(btn),
                     link_preview_options=LinkPreviewOptions(is_disabled=True),
                     quote=True,
                 )
             else:
-                await message.reply_text(
-                    f"{result}",
+                await message.reply_photo(
+                    photo=random.choice(RESULT_PIC),
+                    caption=f"{result}",
                     link_preview_options=LinkPreviewOptions(is_disabled=True),
                     quote=True,
                 )
         else:
-            await message.reply_text(
-                text="No results found.\nOr retry with the correct spelling 🤐",
+            await message.reply_photo(
+                photo=random.choice(RESULT_PIC),
+                caption="Nᴏ ʀᴇsᴜʟᴛs ғᴏᴜɴᴅ.\nOʀ ʀᴇᴛʀʏ ᴡɪᴛʜ ᴛʜᴇ ᴄᴏʀʀᴇᴄᴛ sᴘᴇʟʟɪɴɢ 🤐",
                 quote=True,
             )
 
@@ -135,7 +139,7 @@ async def pages(bot, query):
             pass
     else:
         await query.message.reply_text(
-            text="No results found.\nOr retry with the correct spelling 🤐",
+            text="Nᴏ ʀᴇsᴜʟᴛs ғᴏᴜɴᴅ.\nOʀ ʀᴇᴛʀʏ ᴡɪᴛʜ ᴛʜᴇ ᴄᴏʀʀᴇᴄᴛ sᴘᴇʟʟɪɴɢ 🤐",
             quote=True,
         )
 
@@ -182,7 +186,7 @@ async def get_result(search, page_no, user_id, username):
         crnt_pg = index // 10 + 1
         tot_pg = (count + 10 - 1) // 10
         btn_count = 0
-        result = f"**Search Query:** `{search}`\n**Total Results:** `{count}`\n**Page:** `{crnt_pg}/{tot_pg}`\n**Precise Search: **`{precise_search}`\n**Result Mode:** `{search_md}`\n"
+        result = f"**➳ Sᴇᴀʀᴄʜ Qᴜᴇʀʏ :** `{search}`\n**➳ Tᴏᴛᴀʟ Rᴇsᴜʟᴛs :** `{count}`\n**➳ Pᴀɢᴇ :** `{crnt_pg}/{tot_pg}`\n**➳ Pʀᴇᴄɪsᴇ Sᴇᴀʀᴄʜ : **`{precise_search}`\n**➳ Rᴇsᴜʟᴛ Mᴏᴅᴇ :** `{search_md}`\n\n🔥༺ ──•◈•── •• ──•◈•─ ─༻🔥"
         page = page_no
         for file in files:
             if button_mode == "ON":
@@ -219,11 +223,11 @@ async def get_result(search, page_no, user_id, username):
                     btn[1].append(btn_kb)
 
         nxt_kb = InlineKeyboardButton(
-            text="Next >>",
+            text="Nᴇxᴛ >>",
             callback_data=f"nxt_pg {user_id} {page + 1} {search}",
         )
         prev_kb = InlineKeyboardButton(
-            text="<< Previous",
+            text="<< Pʀᴇᴠɪᴏᴜs",
             callback_data=f"prev_pg {user_id} {page - 1} {search}",
         )
 
@@ -242,10 +246,10 @@ async def get_result(search, page_no, user_id, username):
             result = (
                 result
                 + "\n\n"
-                + "🔻 __Tap on below corresponding file number to download.__ 🔻"
+                + "🔻 __Tᴀᴘ ᴏɴ ʙᴇʟᴏᴡ ᴄᴏʀʀᴇsᴘᴏɴᴅɪɴɢ ғɪʟᴇ ɴᴜᴍʙᴇʀ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ.__ 🔻"
             )
         elif link_mode == "ON":
-            result = result + "\n\n" + " __Tap on file name & then start to download.__"
+            result = result + "\n\n" + " __Tᴀᴘ ᴏɴ ғɪʟᴇ ɴᴀᴍᴇ & ᴛʜᴇɴ sᴛᴀʀᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ.__"
 
         return result, btn
 
@@ -279,6 +283,7 @@ async def get_files(bot, query):
         if cbq:
             msg = await query.message.reply_cached_media(
                 file_id=file_id,
+                thumb="http://postimg.cc/CdLBLhYt",
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
@@ -286,6 +291,7 @@ async def get_files(bot, query):
         else:
             msg = await query.reply_cached_media(
                 file_id=file_id,
+                thumb="http://postimg.cc/CdLBLhYt",
                 caption=f_caption,
                 parse_mode=ParseMode.MARKDOWN,
                 quote=True,
@@ -298,12 +304,12 @@ async def get_files(bot, query):
             minsec = str(delay) + " mins" if delay_dur > 60 else str(delay) + " secs"
             disc = await bot.send_message(
                 user_id,
-                f"Please save the file to your saved messages, it will be deleted in {minsec}",
+                f"Pʟᴇᴀsᴇ sᴀᴠᴇ ᴛʜᴇ ғɪʟᴇ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs, ɪᴛ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ɪɴ {minsec}",
             )
             await asyncio.sleep(delay_dur)
             await disc.delete()
             await msg.delete()
-            await bot.send_message(user_id, "File has been deleted")
+            await bot.send_message(user_id, "Fɪʟᴇ ʜᴀs ʙᴇᴇɴ ᴅᴇʟᴇᴛᴇᴅ")
 
 
 def get_size(size):
