@@ -1,6 +1,6 @@
 from pyrogram import Client, enums, __version__
 
-from . import API_HASH, API_ID, LOGGER, BOT_TOKEN 
+from . import API_HASH, APP_ID, LOGGER, BOT_TOKEN 
 
 from bot.plugins.webcode import bot_run
 from os import environ
