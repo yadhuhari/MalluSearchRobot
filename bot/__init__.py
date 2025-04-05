@@ -7,17 +7,29 @@ from logging.handlers import RotatingFileHandler
 from .translation import Translation
 
 # Change Accordingly While Deploying To A VPS
-API_ID = int(os.environ.get("API_ID"))
+APP_ID = int(os.environ.get("APP_ID"))
 
 API_HASH = os.environ.get("API_HASH")
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
-DATABASE_URI = os.environ.get("DATABASE_URI")
+DB_URL = os.environ.get("DB_URL")
 
 USER_SESSION = os.environ.get("USER_SESSION")
 
+OWNER_ID = int(os.environ.get("OWNER_ID", ""))
+
+ADMINS = [
+    int(user) if id_pattern.search(user) else user
+    for user in os.environ.get("ADMINS", "").split()
+] + [OWNER_ID]
+DB_CHANNELS = [
+    int(ch) if id_pattern.search(ch) else ch
+    for ch in os.environ.get("DB_CHANNELS", "").split()
+]
+
 UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL")
+
 
 VERIFY = {}
 
@@ -27,7 +39,7 @@ logging.basicConfig(
     datefmt='%d-%b-%y %H:%M:%S',
     handlers=[
         RotatingFileHandler(
-            "autofilterbot.txt",
+            "MalluSearchRobot.txt",
             maxBytes=50000000,
             backupCount=10
         ),
