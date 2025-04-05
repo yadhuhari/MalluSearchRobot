@@ -3,14 +3,15 @@ import sys
 import asyncio
 import time
 import shutil
+import random
 from psutil import cpu_percent, virtual_memory, disk_usage
 from pyrogram import Client, filters
-from mfinder.db.broadcast_sql import add_user
-from mfinder.db.settings_sql import get_search_settings, change_search_settings
-from mfinder.utils.constants import STARTMSG, HELPMSG
-from mfinder import LOGGER, ADMINS, START_MSG, HELP_MSG, START_KB, HELP_KB
-from mfinder.utils.util_support import humanbytes, get_db_size
-from mfinder.plugins.serve import get_files
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from bot.db.broadcast_sql import add_user
+from bot.db.settings_sql import get_search_settings, change_search_settings
+from bot import LOGGER, ADMINS
+from bot.utils.util_support import humanbytes, get_db_size
+from bot.plugins.serve import get_files
 
 
 @Client.on_message(filters.command(["start"]))
@@ -23,18 +24,26 @@ async def start(bot, update):
         )
         await add_user(user_id, user_name)
 
-        try:
-            start_msg = START_MSG.format(name, user_id)
-        except Exception as e:
-            LOGGER.warning(e)
-            start_msg = STARTMSG.format(name, user_id)
+        await update.reply_photo(
+            photo=random.choice(PICS),
+            caption=f"""<b> Hᴇʏ Tʜᴇʀᴇ {update.from_user.mention} 👋,
 
-        await bot.send_message(
+I'ᴍ ᴀɴ Aᴡᴇsᴏᴍᴇ Mᴇᴅɪᴀ Sᴇᴀʀᴄʜ Rᴏʙᴏᴛ Sᴘᴇᴄɪᴀʟʟʏ Mᴀᴅᴇ Fᴏʀ Sᴇᴀʀᴄʜɪɴɢ Mᴀʟᴀʏᴀʟᴀᴍ Dᴜʙʙᴇᴅ Mᴏᴠɪᴇs...😉
+Jᴜsᴛ Sᴇɴᴅ Tʜᴇ Nᴀᴍᴇ Oғ Tʜᴇ Mᴏᴠɪᴇ Yᴏᴜ Wᴀɴᴛ Aɴᴅ Sᴇᴇ Mʏ Pᴇᴡᴇʀ...✨
+
+✪ Mᴀɪɴᴛᴀɪɴᴇᴅ Bʏ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a> </b>""",
             chat_id=update.chat.id,
-            text=start_msg,
             reply_to_message_id=update.reply_to_message_id,
-            reply_markup=START_KB,
-        )
+            reply_markup=InlineKeyboardMarkup( [[
+                InlineKeyboardButton("Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 📈", url="t.me/MalluCartoonzz"),
+                ],[
+                InlineKeyboardButton("Hᴇʟᴘ 🛠", callback_data="help_cb"),
+                InlineKeyboardButton("Aʙᴏᴜᴛ 😇", callback_data="about_cb"),
+                ],[
+                InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 👨🏼‍💻 ", url="t.me/MR_TONY_99")
+                ]]
+                )
+            )
         search_settings = await get_search_settings(user_id)
         if not search_settings:
             await change_search_settings(user_id, link_mode=True)
@@ -44,56 +53,157 @@ async def start(bot, update):
 
 @Client.on_message(filters.command(["help"]))
 async def help_m(bot, update):
-    try:
-        help_msg = HELP_MSG
-    except Exception as e:
-        LOGGER.warning(e)
-        help_msg = HELPMSG
+    await update.reply_photo(
+        photo=random.choice(PICS),
+        caption=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
 
-    await bot.send_message(
+Hᴇʀᴇ Yᴏᴜ Cᴀɴ Sᴇᴇ Tʜᴇ Bᴏᴛ's Cᴏᴍᴍᴀɴᴅs...✨
+
+Bᴀsɪᴄ Cᴏᴍᴍᴀɴᴅs :
+○ /start - Tᴏ Cʜᴇᴄᴋ I Aᴍ Aʟɪᴠᴇ
+○ /help  - Tᴏ Sʜᴏᴡ Tʜɪs Mᴇssᴀɢᴇ
+○ /about - Bᴇʜɪɴᴅ Tʜᴇ Bᴏᴛ
+
+Aᴅᴍɪɴ Cᴏᴍᴍᴀɴᴅs :
+○ /logs - Gᴇᴛ ʟᴏɢs ᴀs ᴀ ғɪʟᴇ
+○ /server - Gᴇᴛ sᴇʀᴠᴇʀ sᴛᴀᴛs
+○ /restart - Rᴇsᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ
+○ /stats - Gᴇᴛ ʙᴏᴛ ᴜsᴇʀ sᴛᴀᴛs
+○ /broadcast - Rᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ sᴇɴᴅ ᴛʜᴀᴛ ᴛᴏ ᴀʟʟ ʙᴏᴛ ᴜsᴇʀs
+○ /index - Sᴛᴀʀᴛ ɪɴᴅᴇxɪɴɢ ᴀ ᴅᴀᴛᴀʙᴀsᴇ ᴄʜᴀɴɴᴇʟ
+○ /delete - Rᴇᴘʟʏ ᴛᴏ ᴀ ғɪʟᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ ɪᴛ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ
+○ /autodelete - Sᴇᴛ ғɪʟᴇ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ ɪɴ sᴇᴄᴏɴᴅs
+○ /repairmode - Eɴᴀʙʟᴇ ᴏʀ ᴅɪsᴀʙʟᴇ ʀᴇᴘᴀɪʀ ᴍᴏᴅᴇ
+○ /customcaption - Sᴇᴛ ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ ғᴏʀ ғɪʟᴇs
+○ /adminsettings - Gᴇᴛ ᴄᴜʀʀᴇɴᴛ ᴀᴅᴍɪɴ sᴇᴛᴛɪɴɢs
+○ /ban - Bᴀɴ ᴀ ᴜsᴇʀ ғʀᴏᴍ ʙᴏᴛ
+○ /unban - Uɴʙᴀɴ ᴀ ᴜsᴇʀ ғʀᴏᴍ ʙᴏᴛ
+○ /addfilter - Aᴅᴅ ᴀ ᴛᴇxᴛ ғɪʟᴛᴇʀ
+○ /delfilter - Dᴇʟᴇᴛᴇ ᴀ ᴛᴇxᴛ ғɪʟᴛᴇʀ
+○ /listfilters - Lɪsᴛ ᴀʟʟ ғɪʟᴛᴇʀs ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴅᴅᴇᴅ ɪɴ ᴛʜᴇ ʙᴏᴛ
+○ /forcesub - Sᴇᴛ ғᴏʀᴄᴇ sᴜʙsᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟ
+○ /checklink - Cʜᴇᴄᴋ ɪɴᴠɪᴛᴇ ʟɪɴᴋ ғᴏʀ ғᴏʀᴄᴇ sᴜʙsᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟ
+○ /total - Gᴇᴛ ᴄᴏᴜɴᴛ ᴏғ ᴛᴏᴛᴀʟ ғɪʟᴇs ɪɴ DB </b>""",
         chat_id=update.chat.id,
-        text=help_msg,
         reply_to_message_id=update.reply_to_message_id,
-        reply_markup=HELP_KB,
-    )
+        reply_markup=InlineKeyboardMarkup( [[
+            InlineKeyboardButton("🔙 Bᴀᴄᴋ", callback_data="back_m"),
+            InlineKeyboardButton("Aʙᴏᴜᴛ 😇", callback_data="about_cb")
+            ]]
+            )
+        )
+    
+@Client.on_message(filters.command(["about"]))
+async def about_m(bot, update):
+    await update.reply_photo(
+        photo=random.choice(PICS),
+        caption=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
 
-
+◈ ᴍy ɴᴀᴍᴇ : Rᴇɴᴀᴍᴇʀ 4GB V3
+◈ Dᴇᴠᴇʟᴏᴩᴇʀ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a>
+◈ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ: <a href='https://t.me/MalluCartoonzz'>Mᴀʟʟᴜ Cᴀʀᴛᴏᴏɴᴢᴢ</a>
+◈ Lɪʙʀᴀʀy : <a href='https://github.com/pyrogram'>Pyʀᴏɢʀᴀᴍ</a>
+◈ Lᴀɴɢᴜᴀɢᴇ: <a href='www.python.org'>Pʏᴛʜᴏɴ 𝟹</a>
+◈ Dᴀᴛᴀ Bᴀꜱᴇ: <a href='https://cloud.mongodb.com/'>Mᴏɴɢᴏ DB</a> </b>""",
+        reply_markup=InlineKeyboardMarkup( [[
+            InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 👨🏼‍💻 ", url="t.me/MR_TONY_99")
+            ]]
+            )
+        )
+            
 @Client.on_callback_query(filters.regex(r"^back_m$"))
 async def back(bot, query):
     user_id = query.from_user.id
     name = query.from_user.first_name if query.from_user.first_name else " "
-    try:
-        start_msg = START_MSG.format(name, user_id)
-    except Exception as e:
-        LOGGER.warning(e)
-        start_msg = STARTMSG
-    await query.message.edit_text(start_msg, reply_markup=START_KB)
+    await query.message.edit_text(
+        text=f"""<b> Hᴇʏ Tʜᴇʀᴇ {update.from_user.mention} 👋,
 
+I'ᴍ ᴀɴ Aᴡᴇsᴏᴍᴇ Mᴇᴅɪᴀ Sᴇᴀʀᴄʜ Rᴏʙᴏᴛ Sᴘᴇᴄɪᴀʟʟʏ Mᴀᴅᴇ Fᴏʀ Sᴇᴀʀᴄʜɪɴɢ Mᴀʟᴀʏᴀʟᴀᴍ Dᴜʙʙᴇᴅ Mᴏᴠɪᴇs...😉
+Jᴜsᴛ Sᴇɴᴅ Tʜᴇ Nᴀᴍᴇ Oғ Tʜᴇ Mᴏᴠɪᴇ Yᴏᴜ Wᴀɴᴛ Aɴᴅ Sᴇᴇ Mʏ Pᴇᴡᴇʀ...✨
 
+✪ Mᴀɪɴᴛᴀɪɴᴇᴅ Bʏ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a> </b>""",
+        reply_markup=InlineKeyboardMarkup( [[
+            InlineKeyboardButton("Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 📈", url="t.me/MalluCartoonzz"),
+            ],[
+            InlineKeyboardButton("Hᴇʟᴘ 🛠", callback_data="help_cb"),
+            InlineKeyboardButton("Aʙᴏᴜᴛ 😇", callback_data="about_cb"),
+            ],[
+            InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 👨🏼‍💻 ", url="t.me/MR_TONY_99")
+            ]]
+            )
+        )
 @Client.on_callback_query(filters.regex(r"^help_cb$"))
 async def help_cb(bot, query):
-    try:
-        help_msg = HELP_MSG
-    except Exception as e:
-        LOGGER.warning(e)
-        help_msg = HELPMSG
-    await query.message.edit_text(help_msg, reply_markup=HELP_KB)
+    await query.message.edit_text(
+        text=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
+
+Hᴇʀᴇ Yᴏᴜ Cᴀɴ Sᴇᴇ Tʜᴇ Bᴏᴛ's Cᴏᴍᴍᴀɴᴅs...✨
+
+Bᴀsɪᴄ Cᴏᴍᴍᴀɴᴅs :
+○ /start - Tᴏ Cʜᴇᴄᴋ I Aᴍ Aʟɪᴠᴇ
+○ /help  - Tᴏ Sʜᴏᴡ Tʜɪs Mᴇssᴀɢᴇ
+○ /about - Bᴇʜɪɴᴅ Tʜᴇ Bᴏᴛ
+
+Aᴅᴍɪɴ Cᴏᴍᴍᴀɴᴅs :
+○ /logs - Gᴇᴛ ʟᴏɢs ᴀs ᴀ ғɪʟᴇ
+○ /server - Gᴇᴛ sᴇʀᴠᴇʀ sᴛᴀᴛs
+○ /restart - Rᴇsᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ
+○ /stats - Gᴇᴛ ʙᴏᴛ ᴜsᴇʀ sᴛᴀᴛs
+○ /broadcast - Rᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ sᴇɴᴅ ᴛʜᴀᴛ ᴛᴏ ᴀʟʟ ʙᴏᴛ ᴜsᴇʀs
+○ /index - Sᴛᴀʀᴛ ɪɴᴅᴇxɪɴɢ ᴀ ᴅᴀᴛᴀʙᴀsᴇ ᴄʜᴀɴɴᴇʟ
+○ /delete - Rᴇᴘʟʏ ᴛᴏ ᴀ ғɪʟᴇ ᴛᴏ ᴅᴇʟᴇᴛᴇ ɪᴛ ғʀᴏᴍ ᴅᴀᴛᴀʙᴀsᴇ
+○ /autodelete - Sᴇᴛ ғɪʟᴇ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ ɪɴ sᴇᴄᴏɴᴅs
+○ /repairmode - Eɴᴀʙʟᴇ ᴏʀ ᴅɪsᴀʙʟᴇ ʀᴇᴘᴀɪʀ ᴍᴏᴅᴇ
+○ /customcaption - Sᴇᴛ ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ ғᴏʀ ғɪʟᴇs
+○ /adminsettings - Gᴇᴛ ᴄᴜʀʀᴇɴᴛ ᴀᴅᴍɪɴ sᴇᴛᴛɪɴɢs
+○ /ban - Bᴀɴ ᴀ ᴜsᴇʀ ғʀᴏᴍ ʙᴏᴛ
+○ /unban - Uɴʙᴀɴ ᴀ ᴜsᴇʀ ғʀᴏᴍ ʙᴏᴛ
+○ /addfilter - Aᴅᴅ ᴀ ᴛᴇxᴛ ғɪʟᴛᴇʀ
+○ /delfilter - Dᴇʟᴇᴛᴇ ᴀ ᴛᴇxᴛ ғɪʟᴛᴇʀ
+○ /listfilters - Lɪsᴛ ᴀʟʟ ғɪʟᴛᴇʀs ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴅᴅᴇᴅ ɪɴ ᴛʜᴇ ʙᴏᴛ
+○ /forcesub - Sᴇᴛ ғᴏʀᴄᴇ sᴜʙsᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟ
+○ /checklink - Cʜᴇᴄᴋ ɪɴᴠɪᴛᴇ ʟɪɴᴋ ғᴏʀ ғᴏʀᴄᴇ sᴜʙsᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟ
+○ /total - Gᴇᴛ ᴄᴏᴜɴᴛ ᴏғ ᴛᴏᴛᴀʟ ғɪʟᴇs ɪɴ DB </b>""",
+        reply_markup=InlineKeyboardMarkup( [[
+            InlineKeyboardButton("🔙 Bᴀᴄᴋ", callback_data="back_m"),
+            InlineKeyboardButton("Aʙᴏᴜᴛ 😇", callback_data="about_cb")
+            ]]
+            )
+        )
+
+@Client.on_callback_query(filters.regex(r"^about_cb$"))
+async def about_cb(bot, query):
+    await query.message.edit_text(
+        text=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
+
+◈ ᴍy ɴᴀᴍᴇ : Rᴇɴᴀᴍᴇʀ 4GB V3
+◈ Dᴇᴠᴇʟᴏᴩᴇʀ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a>
+◈ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ: <a href='https://t.me/MalluCartoonzz'>Mᴀʟʟᴜ Cᴀʀᴛᴏᴏɴᴢᴢ</a>
+◈ Lɪʙʀᴀʀy : <a href='https://github.com/pyrogram'>Pyʀᴏɢʀᴀᴍ</a>
+◈ Lᴀɴɢᴜᴀɢᴇ: <a href='www.python.org'>Pʏᴛʜᴏɴ 𝟹</a>
+◈ Dᴀᴛᴀ Bᴀꜱᴇ: <a href='https://cloud.mongodb.com/'>Mᴏɴɢᴏ DB</a> </b>""",
+        reply_markup=InlineKeyboardMarkup( [[
+            InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ 👨🏼‍💻 ", url="t.me/MR_TONY_99")
+            ]]
+            )
+        )
 
 
+        
 @Client.on_message(filters.command(["restart"]) & filters.user(ADMINS))
 async def restart(bot, update):
-    LOGGER.warning("Restarting bot using /restart command")
-    msg = await update.reply_text(text="__Restarting.....__")
+    LOGGER.warning("Rᴇsᴛᴀʀᴛɪɴɢ ʙᴏᴛ ᴜsɪɴɢ /restart ᴄᴏᴍᴍᴀɴᴅ")
+    msg = await update.reply_text(text="__Rᴇsᴛᴀʀᴛɪɴɢ.....__")
     await asyncio.sleep(5)
-    await msg.edit("__Bot restarted !__")
-    os.execv(sys.executable, ["python3", "-m", "mfinder"] + sys.argv)
+    await msg.edit("__Bᴏᴛ Rᴇsᴛᴀʀᴛᴇᴅ...__")
+    os.execv(sys.executable, ["python3", "-m", "bot"] + sys.argv)
 
 
 @Client.on_message(filters.command(["logs"]) & filters.user(ADMINS))
 async def log_file(bot, update):
-    logs_msg = await update.reply("__Sending logs, please wait...__")
+    logs_msg = await update.reply("__Sᴇɴᴅɪɴɢ ʟᴏɢs, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...__")
     try:
-        await update.reply_document("logs.txt")
+        await update.reply_document("logs@MalluSearchRobot.txt")
     except Exception as e:
         await update.reply(str(e))
     await logs_msg.delete()
