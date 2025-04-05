@@ -1,8 +1,20 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from mfinder.db.settings_sql import get_search_settings, change_search_settings
-from mfinder.utils.constants import SET_MSG
+from bot.db.settings_sql import get_search_settings, change_search_settings
 
+SET_MSG = """
+**Below are your current settings:**
+`Info`
+**Precise Mode:** 
+- __If Enabled, bot will match the word & return results with only the exact match__
+- __If Disabled, bot will match the word & return all the results containing the word__    
+**Result Mode:**
+- __If HyperLink, bot will return results in hyperlink format__
+- __If Button, bot will return results in button format__
+- __If List, bot will return results in list format__
+
+
+__You can toggle with right side buttons__:-"""
 
 @Client.on_message(filters.command(["settings"]))
 async def user_settings(bot, update):
