@@ -20,9 +20,10 @@ __You can toggle with right side buttons__:-"""
 async def user_settings(bot, update):
     user_id = update.from_user.id
     set_kb = await find_search_settings(user_id)
-    await bot.send_message(
+    await update.reply_photo(
+        photo=random.choice(PICS),
+        caption=SET_MSG,
         chat_id=user_id,
-        text=SET_MSG,
         reply_markup=set_kb,
     )
 
@@ -82,8 +83,8 @@ async def find_search_settings(user_id):
         InlineKeyboardButton("[Precise Mode]:", callback_data="prec md"),
     ]
 
-    on_kb = InlineKeyboardButton("❌ Disabled", callback_data="prec on")
-    off_kb = InlineKeyboardButton("✅ Enabled", callback_data="prec off")
+    on_kb = InlineKeyboardButton("❌ Dɪsᴀʙʟᴇᴅ", callback_data="prec on")
+    off_kb = InlineKeyboardButton("✅ Eɴᴀʙʟᴇᴅ", callback_data="prec off")
 
     if search_settings:
         precise_mode = search_settings.precise_mode
@@ -99,7 +100,7 @@ async def find_search_settings(user_id):
         kb.append(on_kb)
 
     bkb = [
-        InlineKeyboardButton("[Result Mode]:", callback_data="res mode"),
+        InlineKeyboardButton("[Rᴇsᴜʟᴛ Mᴏᴅᴇ]:", callback_data="res mode"),
     ]
 
     btn_kb = InlineKeyboardButton("📃 List", callback_data="res btnn")
