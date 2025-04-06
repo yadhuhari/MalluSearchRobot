@@ -1,8 +1,8 @@
 import asyncio
 from pyrogram.errors import FloodWait
 from pyrogram import enums
-from mfinder import LOGGER
-from mfinder.db.broadcast_sql import query_msg, del_user
+from bot import LOGGER
+from bot.db.broadcast_sql import query_msg, del_user
 
 
 
