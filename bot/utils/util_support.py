@@ -1,5 +1,5 @@
 import psycopg2
-from mfinder import ADMINS, DB_URL
+from bot import ADMINS, DB_URL
 
 
 def is_admin(user_id):
