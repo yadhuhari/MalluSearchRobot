@@ -5,8 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.pool import StaticPool
-from mfinder import DB_URL, LOGGER
-from mfinder.utils.helpers import unpack_new_file_id
+from bot import DB_URL, LOGGER
+from bot.utils.helpers import unpack_new_file_id
 
 
 BASE = declarative_base()
