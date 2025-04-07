@@ -27,6 +27,14 @@ from bot.db.ban_sql import is_banned
 from bot.db.filters_sql import is_filter
 from bot import LOGGER
 
+RESULT_PIC = [
+ "http://postimg.cc/qNrmPz6t",
+ "http://postimg.cc/YvyW1P7p",
+ "http://postimg.cc/c6ct2ndt",
+ "http://postimg.cc/MMC5LjwF",
+ "http://postimg.cc/fJh5jXB3",
+ "http://postimg.cc/HrY2FmGd"
+]
 
 @Client.on_message(
     ~filters.regex(r"^\/") & filters.text & filters.private & filters.incoming
