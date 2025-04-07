@@ -9,7 +9,7 @@ APP_ID = "19383278"
 
 API_HASH = "6e6c8100d5564c59bfd82a7a86aadb95"
 
-BOT_TOKEN = "7496322896:AAFlspwi2NKv65TpeUEvlCoDAGg701ICT7M"
+BOT_TOKEN = "8104015214:AAEcbWZn7r-Nrs0megN2bD-yWkPVMow0o-w"
 
 DB_URL = "mongodb+srv://mrprincebotx:mrprincebotx@cluster0.ikmilh0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
