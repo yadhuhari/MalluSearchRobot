@@ -13,6 +13,14 @@ from bot import LOGGER, ADMINS
 from bot.utils.util_support import humanbytes, get_db_size
 from bot.plugins.serve import get_files
 
+PICS = [
+ "http://postimg.cc/qNrmPz6t",
+ "http://postimg.cc/YvyW1P7p",
+ "http://postimg.cc/c6ct2ndt",
+ "http://postimg.cc/MMC5LjwF",
+ "http://postimg.cc/fJh5jXB3",
+ "http://postimg.cc/HrY2FmGd"
+]
 
 @Client.on_message(filters.command(["start"]))
 async def start(bot, update):
