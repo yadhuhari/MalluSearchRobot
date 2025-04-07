@@ -107,7 +107,7 @@ async def about_m(bot, update):
         photo=random.choice(PICS),
         caption=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
 
-◈ ᴍy ɴᴀᴍᴇ : Rᴇɴᴀᴍᴇʀ 4GB V3
+◈ ᴍy ɴᴀᴍᴇ : <a href='https://t.me/LokiSearchRobot'>Lᴏᴋɪ Lᴀᴜғᴇʏsᴏɴ ✨</a>
 ◈ Dᴇᴠᴇʟᴏᴩᴇʀ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a>
 ◈ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ: <a href='https://t.me/MalluCartoonzz'>Mᴀʟʟᴜ Cᴀʀᴛᴏᴏɴᴢᴢ</a>
 ◈ Lɪʙʀᴀʀy : <a href='https://github.com/pyrogram'>Pyʀᴏɢʀᴀᴍ</a>
@@ -184,7 +184,7 @@ async def about_cb(bot, query):
     await query.message.edit_text(
         text=f"""<b> Hᴇʏ {update.from_user.mention} 👋,
 
-◈ ᴍy ɴᴀᴍᴇ : Rᴇɴᴀᴍᴇʀ 4GB V3
+◈ ᴍy ɴᴀᴍᴇ : <a href='https://t.me/LokiSearchRobot'>Lᴏᴋɪ Lᴀᴜғᴇʏsᴏɴ ✨</a>
 ◈ Dᴇᴠᴇʟᴏᴩᴇʀ : <a href='https://t.me/MR_TONY_99'>Tᴏɴʏ Sᴛᴀʀᴋ</a>
 ◈ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ: <a href='https://t.me/MalluCartoonzz'>Mᴀʟʟᴜ Cᴀʀᴛᴏᴏɴᴢᴢ</a>
 ◈ Lɪʙʀᴀʀy : <a href='https://github.com/pyrogram'>Pyʀᴏɢʀᴀᴍ</a>
