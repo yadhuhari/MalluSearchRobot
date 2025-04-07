@@ -4,31 +4,23 @@ import time
 
 from logging.handlers import RotatingFileHandler
 
-from .translation import Translation
-
 # Change Accordingly While Deploying To A VPS
-APP_ID = int(os.environ.get("APP_ID"))
+APP_ID = "19383278"
 
-API_HASH = os.environ.get("API_HASH")
+API_HASH = "6e6c8100d5564c59bfd82a7a86aadb95"
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+BOT_TOKEN = "7496322896:AAFlspwi2NKv65TpeUEvlCoDAGg701ICT7M"
 
-DB_URL = os.environ.get("DB_URL")
+DB_URL = "mongodb+srv://mrprincebotx:mrprincebotx@cluster0.ikmilh0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-USER_SESSION = os.environ.get("USER_SESSION")
+USER_SESSION = "BQEnw-4AtlC8zlNYE1FU8rO_Obj11qdnOdA51FDK-gUT5ujX-ocqbCqSzHKCpcDQZYb-zpuyIbAILFYm4lKICXu8nwC8PpxjnrI76OEYrZLOPGqSfwEkQh55xwYtLWORp7w1bvUHAsiZjJKuIsQDOjp3tCCMrFA6j0N93e3fG53iMNdPjI2HZouRWykbbcykLI_vPG3gZEIzk1WLNwkOAo8OsC5dbQbYCtlfv_y9fOrdin1TQjpnxpv9jtVnWnx_p34Xxgbhw-8f4IM7JjqOYFeE31TVKd2kLmNON4IsbXPYBGXvAWXMJJAPX3zjGebaG7yevj6x3_8zcfwYbFq8QS2WMib1KwAAAAGqFIlDAA"
 
-OWNER_ID = int(os.environ.get("OWNER_ID", ""))
+OWNER_ID = "7148439875"
 
-ADMINS = [
-    int(user) if id_pattern.search(user) else user
-    for user in os.environ.get("ADMINS", "").split()
-] + [OWNER_ID]
-DB_CHANNELS = [
-    int(ch) if id_pattern.search(ch) else ch
-    for ch in os.environ.get("DB_CHANNELS", "").split()
-]
+ADMINS = "7148439875"
+DB_CHANNELS = "-1002648543616"
 
-UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL")
+UPDATE_CHANNEL = "MalluCartoonzz"
 
 
 VERIFY = {}
